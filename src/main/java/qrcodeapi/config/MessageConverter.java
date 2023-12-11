@@ -1,4 +1,4 @@
-package qrcodeapi.Config;
+package qrcodeapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

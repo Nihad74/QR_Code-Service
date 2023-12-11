@@ -1,16 +1,16 @@
-package qrcodeapi.Controller;
+package qrcodeapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import qrcodeapi.Application;
+import qrcodeapi.service.QRCodeService;
 
 @RestController
 public class QRCodeController {
     @Autowired
-    private Application.QRCodeService qrCodeService;
+    private QRCodeService qrCodeService;
 
     @GetMapping("/api/health")
     public ResponseEntity<String> health() {
@@ -18,11 +18,8 @@ public class QRCodeController {
     }
 
     @GetMapping("/api/qrcode")
-    public ResponseEntity<byte[]> qrcode() {
-        byte[] bytes = qrCodeService.generateQRCode();
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_PNG)
-                .body(bytes);
+    public ResponseEntity<?> qrcode(@RequestParam(required = false,defaultValue = "200") int size,
+                                         @RequestParam(required = false,defaultValue = "png") String type) {
+        return qrCodeService.generateQRCode(size, type);
     }
 }
