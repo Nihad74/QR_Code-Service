@@ -18,8 +18,13 @@ public class QRCodeController {
     }
 
     @GetMapping("/api/qrcode")
-    public ResponseEntity<?> qrcode(@RequestParam(required = false,defaultValue = "200") int size,
-                                         @RequestParam(required = false,defaultValue = "png") String type) {
-        return qrCodeService.generateQRCode(size, type);
+    public ResponseEntity<?> qrcode(@RequestParam(required = false, defaultValue = "250") Integer size,
+                                         @RequestParam(required = false, defaultValue = "png") String type,
+                                    @RequestParam(required = false) String contents,
+                                    @RequestParam(required = false, defaultValue = "L") String correction){
+        if(size == null && type == null && contents == null && correction == null){
+            return qrCodeService.generateQRCode(250, "png", "Example", "L");
+        }
+        return qrCodeService.generateQRCode(size, type, contents, correction);
     }
 }
