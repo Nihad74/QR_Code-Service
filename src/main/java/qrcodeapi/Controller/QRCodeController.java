@@ -1,12 +1,16 @@
 package qrcodeapi.Controller;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import qrcodeapi.Application;
 
 @RestController
 public class QRCodeController {
+    @Autowired
+    private Application.QRCodeService qrCodeService;
 
     @GetMapping("/api/health")
     public ResponseEntity<String> health() {
@@ -14,7 +18,11 @@ public class QRCodeController {
     }
 
     @GetMapping("/api/qrcode")
-    public ResponseEntity<String> qrcode() {
-        return new ResponseEntity<>("Not implemented", HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<byte[]> qrcode() {
+        byte[] bytes = qrCodeService.generateQRCode();
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .body(bytes);
     }
 }

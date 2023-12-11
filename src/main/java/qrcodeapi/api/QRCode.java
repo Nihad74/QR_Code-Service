@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class QRCode {
-    private BufferedImage image;
     private int width;
     private int height;
 
